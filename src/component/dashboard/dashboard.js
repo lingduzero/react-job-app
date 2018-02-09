@@ -4,10 +4,7 @@ import { NavBar } from "antd-mobile";
 import { Switch, Route } from "react-router-dom";
 import NavLinkBar from "../navlink/navlink";
 import Recuriter from "../recuriter/recuriter";
-
-function Consultant() {
-  return <h2>Consultant Page</h2>;
-}
+import Consultant from "../consultant/consultant";
 
 function Message() {
   return <h2>Message Page</h2>;
@@ -24,17 +21,17 @@ class Dashboard extends Component {
     const navList = [
       {
         path: "/recuriter",
-        text: "recuriter",
+        text: "consultant",
         icon: "recuriter",
-        title: "recuriter list",
+        title: "consultant list",
         component: Recuriter,
         hide: user.type === "consultant"
       },
       {
         path: "/consultant",
-        text: "consultant",
+        text: "recuriter",
         icon: "job",
-        title: "consultant list",
+        title: "recuriter list",
         component: Consultant,
         hide: user.type === "recuriter"
       },
