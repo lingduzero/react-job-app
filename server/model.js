@@ -8,10 +8,10 @@ const models = {
     pwd: { type: String, require: true },
     type: { type: String, require: true },
     avatar: { type: String },
-    desc: { type: String },
     title: { type: String },
     company: { type: String },
-    salary: { type: String }
+    salary: { type: String },
+    requirement: { type: String }
   },
   chat: {}
 };

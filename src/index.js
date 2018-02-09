@@ -3,14 +3,16 @@ import ReactDom from "react-dom";
 import { createStore, applyMiddleware, compose } from "redux";
 import thunk from "redux-thunk";
 import { Provider } from "react-redux";
-import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
+import Login from "./container/login/login";
+import Register from "./container/register/register";
+import RecuriterInfo from "./container/recuriterinfo/recuriterinfo";
+import ConsultantInfo from "./container/consultantinfo/consultantinfo";
+import AuthRoute from "./component/authroute/authroute";
+import Dashboard from "./component/dashboard/dashboard";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 import reducers from "./reducer";
 import "./config";
 import "./index.css";
-import Login from "./container/login/login";
-import Register from "./container/register/register";
-import AuthRoute from "./component/authroute/authroute";
-
 const store = createStore(
   reducers,
   compose(
@@ -18,17 +20,19 @@ const store = createStore(
     window.devToolsExtension ? window.devToolsExtension() : () => {}
   )
 );
-function Boss() {
-  return <h2>Boss</h2>;
-}
+
 ReactDom.render(
   <Provider store={store}>
     <BrowserRouter>
       <div>
         <AuthRoute />
-        <Route path="/boss" component={Boss} />
-        <Route path="/login" component={Login} />
-        <Route path="/register" component={Register} />
+        <Switch>
+          <Route path="/recuriterinfo" component={RecuriterInfo} />
+          <Route path="/consultantinfo" component={ConsultantInfo} />
+          <Route path="/login" component={Login} />
+          <Route path="/register" component={Register} />
+          <Route component={Dashboard} />
+        </Switch>
       </div>
     </BrowserRouter>
   </Provider>,

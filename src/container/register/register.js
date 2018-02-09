@@ -42,6 +42,7 @@ class Register extends Component {
         {this.props.redirectTo ? <Redirect to={this.props.redirectTo} /> : null}
         <Logo />
         <List>
+          <WingBlank />
           {this.props.msg ? (
             <p className="error-msg">{this.props.msg}</p>
           ) : null}
