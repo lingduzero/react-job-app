@@ -11,30 +11,22 @@ import {
 } from "antd-mobile";
 import { connect } from "react-redux";
 import { register } from "../../redux/user.redux";
+import appForm from "../../component/app-form/app-form";
 
 @connect(state => state.user, { register })
+@appForm
 class Register extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      user: "",
-      pwd: "",
-      repeatpwd: "",
-      type: "recuriter"
-    };
-
     this.handleRegister = this.handleRegister.bind(this);
   }
-
+  componentDidMount() {
+    this.props.handleChange("type", "recuriter");
+  }
   handleRegister() {
-    this.props.register(this.state);
+    this.props.register(this.props.state);
   }
 
-  handleChange(key, val) {
-    this.setState({
-      [key]: val
-    });
-  }
   render() {
     const RadioItem = Radio.RadioItem;
     return (
@@ -46,34 +38,34 @@ class Register extends Component {
           {this.props.msg ? (
             <p className="error-msg">{this.props.msg}</p>
           ) : null}
-          <InputItem onChange={v => this.handleChange("user", v)}>
+          <InputItem onChange={v => this.props.handleChange("user", v)}>
             username
           </InputItem>
           <WhiteSpace />
           <InputItem
             type="password"
-            onChange={v => this.handleChange("pwd", v)}
+            onChange={v => this.props.handleChange("pwd", v)}
           >
             password
           </InputItem>
           <WhiteSpace />
           <InputItem
             type="password"
-            onChange={v => this.handleChange("repeatpwd", v)}
+            onChange={v => this.props.handleChange("repeatpwd", v)}
           >
             confirm
           </InputItem>
           <WhiteSpace />
           <RadioItem
-            checked={this.state.type === "recuriter"}
-            onChange={() => this.handleChange("type", "recuriter")}
+            checked={this.props.state.type === "recuriter"}
+            onChange={() => this.props.handleChange("type", "recuriter")}
           >
             recuriter
           </RadioItem>
           <WhiteSpace />
           <RadioItem
-            checked={this.state.type === "consultant"}
-            onChange={() => this.handleChange("type", "consultant")}
+            checked={this.props.state.type === "consultant"}
+            onChange={() => this.props.handleChange("type", "consultant")}
           >
             consultant
           </RadioItem>

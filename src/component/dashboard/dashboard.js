@@ -5,14 +5,11 @@ import { Switch, Route } from "react-router-dom";
 import NavLinkBar from "../navlink/navlink";
 import Recuriter from "../recuriter/recuriter";
 import Consultant from "../consultant/consultant";
-
+import User from "../user/user";
 function Message() {
   return <h2>Message Page</h2>;
 }
 
-function User() {
-  return <h2>User Page</h2>;
-}
 @connect(state => state)
 class Dashboard extends Component {
   render() {
