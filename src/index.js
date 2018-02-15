@@ -9,6 +9,7 @@ import RecuriterInfo from "./container/recuriterinfo/recuriterinfo";
 import ConsultantInfo from "./container/consultantinfo/consultantinfo";
 import AuthRoute from "./component/authroute/authroute";
 import Dashboard from "./component/dashboard/dashboard";
+import Chat from "./component/chat/chat";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import reducers from "./reducer";
 import "./config";
@@ -31,6 +32,7 @@ ReactDom.render(
           <Route path="/consultantinfo" component={ConsultantInfo} />
           <Route path="/login" component={Login} />
           <Route path="/register" component={Register} />
+          <Route path="/chat/:user" component={Chat} />
           <Route component={Dashboard} />
         </Switch>
       </div>

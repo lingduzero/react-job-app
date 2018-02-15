@@ -13,7 +13,14 @@ const models = {
     salary: { type: String },
     requirement: { type: String }
   },
-  chat: {}
+  chat: {
+    chatid: { type: String, require: true },
+    from: { type: String, require: true },
+    to: { type: String, require: true },
+    read: { type: Boolean, default: false },
+    content: { type: String, require: true, default: "" },
+    create_time: { type: Number, default: new Date().getTime() }
+  }
 };
 
 for (let m in models) {

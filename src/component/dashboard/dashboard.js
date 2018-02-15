@@ -5,13 +5,18 @@ import { Switch, Route } from "react-router-dom";
 import NavLinkBar from "../navlink/navlink";
 import Recuriter from "../recuriter/recuriter";
 import Consultant from "../consultant/consultant";
+import Message from "../message/message";
 import User from "../user/user";
-function Message() {
-  return <h2>Message Page</h2>;
-}
+import { getMsgList, receiveMsg } from "../../redux/chat.redux";
 
-@connect(state => state)
+@connect(state => state, { getMsgList, receiveMsg })
 class Dashboard extends Component {
+  componentDidMount() {
+    if (!this.props.chat.chatmsg.length) {
+      this.props.getMsgList();
+      this.props.receiveMsg();
+    }
+  }
   render() {
     const { pathname } = this.props.location;
     const user = this.props.user;
