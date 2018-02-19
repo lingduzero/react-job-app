@@ -1,12 +1,17 @@
 import React from "react";
 import { List, InputItem, NavBar, Icon, Grid } from "antd-mobile";
 import { connect } from "react-redux";
-import { getMsgList, sendMsg, receiveMsg } from "../../redux/chat.redux";
+import {
+  getMsgList,
+  sendMsg,
+  receiveMsg,
+  readMsg
+} from "../../redux/chat.redux";
 import { getChatId } from "../../util";
 //import io from "socket.io-client";
 // const socket = io("ws://localhost:9093");
 
-@connect(state => state, { getMsgList, sendMsg, receiveMsg })
+@connect(state => state, { getMsgList, sendMsg, receiveMsg, readMsg })
 class Chat extends React.Component {
   constructor(props) {
     super(props);
@@ -18,9 +23,11 @@ class Chat extends React.Component {
       this.props.getMsgList();
       this.props.receiveMsg();
     }
-    this.fixCarousel();
   }
-
+  componentWillUnmount() {
+    const to = this.props.match.params.user;
+    this.props.readMsg(to);
+  }
   fixCarousel() {
     setTimeout(function() {
       window.dispatchEvent(new Event("resize"));
@@ -29,14 +36,13 @@ class Chat extends React.Component {
 
   handleSubmit() {
     //socket.emit("sendmsg", { text: this.state.text });
-    //this.setState({ text: "" });
-    console.log("click");
+    //this.setState({ text: "" })
     const from = this.props.user._id;
     const to = this.props.match.params.user;
     const msg = this.state.text;
     //console.log({ from, to, msg });
     this.props.sendMsg({ from, to, msg });
-    this.setState({ text: "" });
+    this.setState({ text: "", showEmoji: false });
   }
   render() {
     const emoji = "😀 😃 😄 😁 😆 😅 😂 😊 😇 🙂 🙃 😉 😌 😍 😘 😗 😙 😚 😋 😜 😝 😛 🤑 🤗 🤓 😎 😏 😒 😞 😔 😟 😕 🙁 😣 😖 😫 😩 😤 😠 😡 😶 😐 😑 😯 😦 😧 😮 😲 😵 😳 😱 😨 😰 😢 😥 😭 😓 😪 😴 🙄 🤔 😬 🤐 😷 🤒 🤕 😈 👿 👹 👺 💩 👻 💀 ☠️ 👽 👾 🤖 🎃 😺 😸 😹 😻 😼 😽 🙀 😿 😾 👐 🙌 👏 🙏 👍 👎 👊 ✊ 🤘 👌 👈 👉 👆 👇 ✋  🖐 🖖 👋  💪 🖕 ✍️  💅 🖖 💄 💋 👄 👅 👂 👃 👁 👀 "
@@ -51,6 +57,7 @@ class Chat extends React.Component {
     }
     const chatid = getChatId(userid, this.props.user._id);
     const chatmsgs = this.props.chat.chatmsg.filter(v => v.chatid === chatid);
+    console.log(chatmsgs);
     return (
       <div id="chat-page">
         <NavBar
@@ -64,6 +71,7 @@ class Chat extends React.Component {
         </NavBar>
 
         {chatmsgs.map(v => {
+          console.log(v);
           const avatar = require(`../img/${users[v.from].avatar}.png`);
           return v.from === userid ? (
             <List key={v._id}>
